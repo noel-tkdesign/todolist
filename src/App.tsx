@@ -41,6 +41,21 @@ const handleEdit = (id: number,inputValue:string) => {
   setTodos(newTodos);
 };
 
+const handleChecked = (id: number, checked: boolean) => {
+  const newTodos = todos.map((todo) => {
+    if(todo.id === id){
+      todo.checked= !checked;
+    }
+    return todo;
+  });
+  setTodos(newTodos);
+
+};
+
+const handleDelete = (id: number) =>{
+  const newTodos = todos.filter((todo) => todo.id !== id);
+  setTodos(newTodos);
+};
 
   return (
     <div className="App">
@@ -53,8 +68,18 @@ const handleEdit = (id: number,inputValue:string) => {
         <ul className='todoList'>
           {todos.map(todo =>(
             <li key={todo.id}>
-              <input type="text" onChange={(e) => handleEdit(todo.id, e.target.value)} className="inputText"value={todo.inputValue}/>
-              <input type="checkbox" onChange={(e) => handleEdit(todo.id, e.target.value)} className="inputText"value={todo.inputValue}/>
+              <input 
+                type="text" 
+                onChange={(e) => handleEdit(todo.id, e.target.value)} 
+                className="inputText"
+                value={todo.inputValue}
+                disabled= {todo.checked}
+              />
+              <input 
+                type="checkbox" 
+                onChange={(e) => handleChecked(todo.id, todo.checked)} 
+              />
+              <button onClick={() => handleDelete(todo.id)}>消す</button>
             </li>
           ))}
         </ul>
